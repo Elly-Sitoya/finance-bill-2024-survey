@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -111,5 +111,163 @@
         <button type="button" name="submit">Submit</button>
       </div>
     </div>
+  </body>
+</html> -->
+<!-- -------------------------------------------------------------- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <title>Kenya Finance Bill Survey</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <h1>Kenya Finance Bill Survey</h1>
+      </div>
+
+      <span>Share your thoughts on the recent Finance Bill!</span>
+
+      <div id="question1">
+        <p>
+          Are you aware of the recent Finance Bill proposed by the Kenyan
+          government?
+        </p>
+        <label> <input type="radio" name="q1" value="Yes" /> Yes </label>
+        <label> <input type="radio" name="q1" value="No" /> No </label>
+      </div>
+
+      <div id="question2">
+        <p>
+          If you answered yes, how did the proposed bill affect your perception
+          of the government's economic policies?
+        </p>
+        <label>
+          <input type="radio" name="q2" value="More positive" /> More positive
+        </label>
+        <label>
+          <input type="radio" name="q2" value="More negative" /> More negative
+        </label>
+        <label>
+          <input type="radio" name="q2" value="No change" /> No change
+        </label>
+        <br />
+        <textarea
+          id="q2_reason"
+          rows="3"
+          cols="50"
+          placeholder="(Optional) Briefly explain your answer (e.g., increased taxes, social program cuts)"
+        ></textarea>
+      </div>
+
+      <div id="question3">
+        <p>
+          What specific aspects of the proposed Finance Bill concerned you most?
+          (Select all that apply):
+        </p>
+        <label>
+          <input type="checkbox" name="q3[]" value="tax_essentials" /> Increased
+          taxes on essential goods
+        </label>
+        <label>
+          <input type="checkbox" name="q3[]" value="reduced_spending" /> Reduced
+          government spending on social programs (healthcare, education)
+        </label>
+        <label>
+          <input type="checkbox" name="q3[]" value="business_impact" /> Negative
+          impact on businesses and job creation
+        </label>
+        <label>
+          <input type="checkbox" name="q3[]" value="lack_transparency" /> Lack
+          of transparency in the bill's purpose
+        </label>
+        <label>
+          <input type="checkbox" name="q3[]" value="other" /> Other (Please
+          specify)
+          <input type="text" id="q3_other" placeholder="Enter details" />
+        </label>
+        <label>
+          <input type="checkbox" name="q3[]" value="none_above" /> None of the
+          above
+        </label>
+      </div>
+
+      <div id="question4">
+        <p>
+          (Optional) If you had any positive views on the proposed Finance Bill,
+          please share them here:
+        </p>
+        <textarea id="q4" rows="5" cols="50"></textarea>
+      </div>
+
+      <div id="question5">
+        <p>
+          Do you think the government should consider revising the Finance Bill
+          and reintroduce it with changes?
+        </p>
+        <label> <input type="radio" name="q5" value="yes" /> Yes </label>
+        <label> <input type="radio" name="q5" value="no" /> No </label>
+      </div>
+
+      <div id="question6">
+        <p>
+          (Optional) If you answered yes, what changes would you like to see in
+          a revised Finance Bill?
+        </p>
+        <textarea id="q6" rows="5" cols="50"></textarea>
+      </div>
+
+      <div id="submit">
+        <button id="submit-btn" type="button">Submit</button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("submit-btn")
+        .addEventListener("click", function () {
+          // Retrieve form data
+          const formData = {
+            q1: document.querySelector('input[name="q1"]:checked')?.value || "",
+            q2: document.querySelector('input[name="q2"]:checked')?.value || "",
+            q2_reason: document.getElementById("q2_reason").value.trim(),
+            q3: Array.from(
+              document.querySelectorAll('input[name="q3[]"]:checked')
+            ).map((cb) => cb.value),
+            q3_other: document.getElementById("q3_other").value.trim(),
+            q4: document.getElementById("q4").value.trim(),
+            q5: document.querySelector('input[name="q5"]:checked')?.value || "",
+            q6: document.getElementById("q6").value.trim(),
+          };
+
+          // Construct the JSON object
+          const jsonData = JSON.stringify(formData);
+
+          // Submit the data
+          fetch("http://localhost:5000/form/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: jsonData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              alert("Survey submitted successfully!");
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error("Error submitting survey:", error);
+              alert("An error occurred while submitting the survey.");
+            });
+        });
+    </script>
   </body>
 </html>
