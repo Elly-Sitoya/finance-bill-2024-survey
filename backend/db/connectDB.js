@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
-const connectDB = (url) => {
-  return mongoose.connect(url, {
+const connectSurveysDB = (url) => {
+  const surveyDB = mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000, // Set a higher timeout value
+    socketTimeoutMS: 45000, //
   });
+
+  return surveyDB;
 };
 
-module.exports = connectDB;
+module.exports = connectSurveysDB;

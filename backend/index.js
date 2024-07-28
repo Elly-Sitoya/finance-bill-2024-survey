@@ -27,6 +27,7 @@ const cors = require("cors"); // Import cors
 const connectDB = require("./db/connectDB");
 require("dotenv").config();
 const formRouter = require("./routes/submitForm");
+const connectSurveysDB = require("./db/connectDB");
 
 const app = express();
 const port = 5000;

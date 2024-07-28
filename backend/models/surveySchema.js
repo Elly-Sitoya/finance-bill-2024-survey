@@ -37,6 +37,7 @@
 // module.exports = Survey;
 
 const mongoose = require("mongoose");
+const connectSurveysDB = require("../db/connectDB");
 
 const surveySchema = new mongoose.Schema({
   q1: {
@@ -69,6 +70,7 @@ const surveySchema = new mongoose.Schema({
   },
 });
 
-const Survey = mongoose.model("Survey", surveySchema);
+// const Survey = mongoose.model("Survey", surveySchema);
+const Survey = surveySchema.model("Survey", surveySchema);
 
 module.exports = Survey;
